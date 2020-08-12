@@ -1,0 +1,20 @@
+.header{
+    display:"flex"
+}
+.buttonCss{
+    margin-top: -18px;
+    margin-right: -18px;
+    border-radius: 3rem 3rem;
+    background:rgb(255, 51, 128)
+}
+.category{
+    margin-top: 3%;
+}
+/* .categoryName{
+    margin: 0% 40% 0% 0%;
+} */
+.categoryBox{
+    background-color: #F7F8FA;
+    padding:0% 10%;
+    margin:10% 0%
+}
