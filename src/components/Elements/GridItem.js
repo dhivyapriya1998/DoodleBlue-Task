@@ -17,27 +17,24 @@ function GridItem(props) {
   const [allData, setAllData] = useState([]);
 
   useEffect(() => {
-    console.log(global.user[0]);
     setItems(global.user);
-    const arr = { ...global.user };
-    const rty = [arr[0], [{ Name: "dp" }]];
-    console.log("vandhur", rty);
     if (global.user.length > 0) {
       let formatedData = _.chunk(global.user[0].sub, 3);
       setsubCategory(formatedData);
-      console.log("formatedData", formatedData);
+      // console.log("formatedData", formatedData);
     }
-  }, [global.user[0]]);
+  }, [global.user[0], global.categories]);
 
   useEffect(() => {
-    console.log(global.categories);
     setAllData(global.categories);
   }, [global.categories]);
 
   const editModal = (name) => {
-    console.log("items..", items[0]);
+    console.log("items..", allData);
     setEditModalval(!editModalval);
-    items[0].sub.map((el) => (el.name === name ? setSubname(el) : null));
+    items[0].sub.map((el) => (el.name === name ? setPrice(el) : null));
+    allData.map((el) => {return(el.sub.map((val) => {return (val.name) === name ? setSubname(el) : null}) )})
+    // allData.map((el) => (el.sub.map((val) => {return (val.name) === name ? setSubname(el) : null))} );
   };
 
   const cellRenderer = ({ columnIndex, key, rowIndex, parent, style }) => {
@@ -50,7 +47,6 @@ function GridItem(props) {
     console.log("BookDatum", BookDatum);
 
     return BookDatum ? (
-       
       <Card
         style={{ display: "flex", float: "left", margin: "3rem 25px" }}
         onClick={() => {
@@ -71,9 +67,7 @@ function GridItem(props) {
           </div>
         </div>
       </Card>
-    ) : null
-
-  
+    ) : null;
   };
   return (
     <div>
@@ -107,7 +101,6 @@ function GridItem(props) {
               width={width}
             />
           )}
-        
         </AutoSizer>
       </div>
     </div>
@@ -115,3 +108,43 @@ function GridItem(props) {
 }
 
 export default GridItem;
+
+// import React,{useContext} from 'react'
+
+// import {
+//   grommet,
+//   Box,
+//   Card,
+//   Grid,
+//   Grommet,
+//   ResponsiveContext,
+//   Text,
+// } from 'grommet';
+
+// function GridItem() {
+//   const cards = Array(20)
+//   .fill()
+
+//   .map((_, i) => <Text key={i}>{`Card ${i}`}</Text>);
+//   const size = useContext(ResponsiveContext);
+
+//   return (
+//     <div>
+//      <Grommet theme={grommet}>
+//       <Box pad="large">
+//         <Grid columns={size !== 'small' ? 'small' : '100%'} gap="small">
+//           {cards.map((card, index) => (
+
+//             <Box pad="large" key={index}>
+//               {card}
+//             </Box>
+//           ))}
+//         </Grid>
+//       </Box>
+//     </Grommet>
+
+//     </div>
+//   )
+// }
+
+// export default GridItem

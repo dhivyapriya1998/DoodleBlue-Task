@@ -4,32 +4,67 @@ import { GlobalContext } from "../../GlobalContext";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
 function Modal(props) {
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Books");
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
-  const [data, setData] = useState([]);
+  const [editPrice, setEditPrice] = useState("");
+  const [editName, setEditName] = useState("");
+  const [subcategoy, setSubcategoy] = useState("")
 
   const global = useContext(GlobalContext);
 
   useEffect(() => {
-    const Arr = [];
-    Arr.push(props);
+    console.log(
+      "props..",
+      props,
+      props.name.Name,
+      props.price.price,
+      props.price.name
+    );
+    setEditPrice(props.price.price)
+    setEditName(props.name.Name)
+    setSubcategoy( props.price.name)
 
-    console.log("globsl...", global.categories);
-    setData(Arr[0].name);
-  });
+  }, []);
+
   const saveData = () => {
-    const copy = global.category;
-    let val = [copy, { category: category, Title: title, price: price }];
-    console.log("data", val, props);
-    props.closeModal(val);
+    let newCatagory = [...global.categories];
+    newCatagory.map((el) => {
+      console.log("check...", el.Name, category);
+      if (el.Name.toLowerCase() === category.toLowerCase()) {
+        console.log("check...", el.Name, category);
+        let newSub = el.sub.push({ name: title, price: price });
+        return { ...el, sub: newSub };
+      }
+
+      return el;
+    });
+    global.getCategory(newCatagory);
+    console.log("data", global.categories);
+    props.closeModal("val");
+  };
+  const EditData = () => {
+    let newCatagory = [...global.categories];
+    newCatagory.map((el) => {
+      console.log("check...", el.Name, category);
+      if (el.Name.toLowerCase() === category.toLowerCase()) {
+        console.log("check...", el.Name, category);
+        let newSub = el.sub.push({ name: title, price: price });
+        return { ...el, sub: newSub };
+      }
+
+      return el;
+    });
+    global.getCategory(newCatagory);
+    console.log("data", global.categories);
+    props.closeModal("val");
   };
 
   return (
     <div className="m-4">
       <Form>
         <div className="mb-5 text-center">
-          <h3>{data ? "Edit Product" : "Add product"}</h3>
+          <h3>{subcategoy ? "Edit Product" : "Add product"}</h3>
         </div>
         <FormGroup>
           <Label for="exampleSelect">Product Category</Label>
@@ -37,7 +72,9 @@ function Modal(props) {
             type="select"
             name="select"
             id="exampleSelect"
+            placeholder={editName ? editName : "Enter Category Name"}
             onChange={(e) => setCategory(e.target.value)}
+            value={category}
           >
             {global.categories.map((el) => {
               return <option>{el.Name}</option>;
@@ -49,8 +86,9 @@ function Modal(props) {
           <Input
             type="text"
             id="exampleEmail"
-            placeholder={data ? data.name : "Enter Product Title"}
+            placeholder={subcategoy ? subcategoy: "Enter Product Title"}
             onChange={(e) => setTitle(e.target.value)}
+            value={title}
           />
         </FormGroup>
         <FormGroup>
@@ -60,8 +98,9 @@ function Modal(props) {
           <Input
             type="text"
             id="exampleEmail"
-            placeholder={data ? data.price : "Enter Product Price"}
+            placeholder={editPrice ? editPrice : "Enter Product Price"}
             onChange={(e) => setPrice(e.target.value)}
+            value={price}
           />
         </FormGroup>
         <FormGroup>
@@ -73,9 +112,11 @@ function Modal(props) {
             {/* <Button>Cancel</Button> &nbsp;&nbsp; */}
             <Button
               style={{ background: "#FF3380" }}
-              onClick={() => saveData()}
+              onClick={() => {
+                subcategoy ? EditData() : saveData();
+              }}
             >
-              {data ? "Update" : "Save"}
+              {subcategoy ? "Update" : "Save"}
             </Button>
           </div>
         </div>
