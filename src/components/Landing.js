@@ -16,7 +16,7 @@ function Landing() {
   };
   const cancelClick = (val) => {
     if (val) {
-      console.log("cancelllll");
+      console.log("cancel");
     }
   };
   return (

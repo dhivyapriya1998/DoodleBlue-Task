@@ -15,47 +15,9 @@ function Categories() {
   };
   useEffect(() => {
     getProduct("01")
+    console.log("get",getProduct("01"))
   }, [])
 
-//   const categoryData = [
-//     {
-//       Name: "Books",
-//       id: "01",
-//       sub: [
-//         { name: "Tamil", price: "130" },
-//         { name: "English", price: "251" },
-//         { name: "Social", price: "130" },
-//         { name: "Science", price: "130" },
-//       ],
-//     },
-//     {
-//       Name: "Dress",
-//       id: "02",
-//       sub: [
-//         { name: "Sweater", price: "2000" },
-//         { name: "Jumpsuit", price: "2500" },
-//       ],
-//     },
-//     {
-//       Name: "Cosmetics",
-//       id: "03",
-//       sub: [
-//         { name: "Handbag", price: "200" },
-//         { name: "Shoe", price: "750" },
-//       ],
-//     },
-//     {
-//       Name: "Electric Appliances",
-//       id: "04",
-//       sub: [
-//         { name: "Laptop", price: "20000" },
-//         { name: "Mobile", price: "5000" },
-//       ],
-//     },
-//   ];
-//   useEffect(() => {
-//     global.getCategory(categoryData);
-//   }, []);
   return (
     <div>
       {global.categories.map((el) => {

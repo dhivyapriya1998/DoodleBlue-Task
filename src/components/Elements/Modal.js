@@ -9,23 +9,22 @@ function Modal(props) {
   const [price, setPrice] = useState("");
   const [editPrice, setEditPrice] = useState("");
   const [editName, setEditName] = useState("");
-  const [subcategoy, setSubcategoy] = useState("")
+  const [subcategoy, setSubcategoy] = useState("");
+  const [close, setclose] = useState("");
+  const [ID, setId] = useState("")
 
   const global = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log(
-      "props..",
-      props,
-      props.name.Name,
-      props.price.price,
-      props.price.name
-    );
-    setEditPrice(props.price.price)
-    setEditName(props.name.Name)
-    setSubcategoy( props.price.name)
-
-  }, []);
+    if (props.price) {
+      console.log("props", props);
+      setEditPrice(props.price.price);
+      setEditName(props.name.Name);
+      setSubcategoy(props.price.name);
+      setId(props.price.id)
+      setclose(props);
+    }
+  }, [props]);
 
   const saveData = () => {
     let newCatagory = [...global.categories];
@@ -43,21 +42,34 @@ function Modal(props) {
     console.log("data", global.categories);
     props.closeModal("val");
   };
-  const EditData = () => {
+  const EditData = (sub, cost,identity) => {
     let newCatagory = [...global.categories];
+
     newCatagory.map((el) => {
+      console.log(category, price, title);
       console.log("check...", el.Name, category);
       if (el.Name.toLowerCase() === category.toLowerCase()) {
         console.log("check...", el.Name, category);
-        let newSub = el.sub.push({ name: title, price: price });
-        return { ...el, sub: newSub };
+        el.Name = category;
+        el.sub.map((val) => {
+          if (val.name === sub && val.price === cost ) {
+            val.name = title;
+            val.price = price;
+          }
+        });
+
+        // let newSub = el.sub.push({ name: title, price: price });
+        // return { ...el, sub: newSub };
+        console.log("vallll", el);
       }
 
       return el;
     });
     global.getCategory(newCatagory);
     console.log("data", global.categories);
-    props.closeModal("val");
+    if (editPrice) {
+      props.Closemodal("val");
+    }
   };
 
   return (
@@ -86,7 +98,7 @@ function Modal(props) {
           <Input
             type="text"
             id="exampleEmail"
-            placeholder={subcategoy ? subcategoy: "Enter Product Title"}
+            placeholder={subcategoy ? subcategoy : "Enter Product Title"}
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
@@ -113,7 +125,7 @@ function Modal(props) {
             <Button
               style={{ background: "#FF3380" }}
               onClick={() => {
-                subcategoy ? EditData() : saveData();
+                subcategoy ? EditData(subcategoy, editPrice) : saveData();
               }}
             >
               {subcategoy ? "Update" : "Save"}
