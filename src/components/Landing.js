@@ -4,6 +4,7 @@ import { Button, Modal, Row, Col, Container } from "reactstrap";
 import AddModal from "./Elements/Modal";
 import Categories from "./Elements/Categories";
 import GridItem from "./Elements/GridItem";
+import Ranger from "./Elements/RangeInput";
 
 function Landing() {
   const [open, setOpen] = useState(false);
@@ -23,8 +24,8 @@ function Landing() {
     <div className="m-4">
       <div className="header">
         <h3>
-        <b> Products</b>
-         
+          <b> Products</b>
+
           <span style={{ float: "right" }}>
             <Button
               style={{ background: "#FF3380" }}
@@ -51,6 +52,7 @@ function Landing() {
               <div className="categoryBox">
                 <Categories />
               </div>
+              <div><Ranger /></div>
             </Col>
             <Col sm={9}>
               <GridItem />
