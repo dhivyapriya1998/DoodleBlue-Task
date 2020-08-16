@@ -11,7 +11,7 @@ function Modal(props) {
   const [editName, setEditName] = useState("");
   const [subcategoy, setSubcategoy] = useState("");
   const [close, setclose] = useState("");
-  const [ID, setId] = useState("")
+  const [ID, setId] = useState("");
 
   const global = useContext(GlobalContext);
 
@@ -21,7 +21,7 @@ function Modal(props) {
       setEditPrice(props.price.price);
       setEditName(props.name.Name);
       setSubcategoy(props.price.name);
-      setId(props.price.id)
+      setId(props.price.id);
       setclose(props);
     }
   }, [props]);
@@ -42,7 +42,7 @@ function Modal(props) {
     console.log("data", global.categories);
     props.closeModal("val");
   };
-  const EditData = (sub, cost,identity) => {
+  const EditData = (sub, cost, identity) => {
     let newCatagory = [...global.categories];
 
     newCatagory.map((el) => {
@@ -52,7 +52,7 @@ function Modal(props) {
         console.log("check...", el.Name, category);
         el.Name = category;
         el.sub.map((val) => {
-          if (val.name === sub && val.price === cost ) {
+          if (val.name === sub && val.price === cost) {
             val.name = title;
             val.price = price;
           }
@@ -102,6 +102,11 @@ function Modal(props) {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
           />
+          {!title ? (
+            <div style={{ color: "red" }}>
+              Product Title cannot be left Empty!
+            </div>
+          ) : null}
         </FormGroup>
         <FormGroup>
           <Label for="exampleEmail" onClick={() => console.log(props.subName)}>
@@ -114,6 +119,9 @@ function Modal(props) {
             onChange={(e) => setPrice(e.target.value)}
             value={price}
           />
+          {!price ? (
+            <div style={{ color: "red" }}>Price cannot be left Empty!</div>
+          ) : null}
         </FormGroup>
         <FormGroup>
           <Label for="exampleFile">Upload Product Image</Label>
@@ -121,9 +129,9 @@ function Modal(props) {
         </FormGroup>
         <div className="header">
           <div style={{ float: "right" }}>
-            {/* <Button>Cancel</Button> &nbsp;&nbsp; */}
             <Button
               style={{ background: "#FF3380" }}
+              disabled={!title || !price ? true : false}
               onClick={() => {
                 subcategoy ? EditData(subcategoy, editPrice) : saveData();
               }}

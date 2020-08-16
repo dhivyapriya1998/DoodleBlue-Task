@@ -5,6 +5,8 @@ import AddModal from "./Elements/Modal";
 import Categories from "./Elements/Categories";
 import GridItem from "./Elements/GridItem";
 import Ranger from "./Elements/RangeInput";
+import StarRating from './Elements/Rating.jsx';
+// import Pagination from './Elements/Pagination'
 
 function Landing() {
   const [open, setOpen] = useState(false);
@@ -53,9 +55,11 @@ function Landing() {
                 <Categories />
               </div>
               <div><Ranger /></div>
+              <div><StarRating /></div>
             </Col>
             <Col sm={9}>
               <GridItem />
+            
             </Col>
           </Row>
         </div>

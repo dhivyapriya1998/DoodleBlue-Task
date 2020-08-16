@@ -7,16 +7,18 @@ function Categories() {
   const global = useContext(GlobalContext);
   const [state, setstate] = useState("");
 
-
   const getProduct = (filterval) => {
-    global.categories.filter((el) =>
-      el.id === filterval ? global.setValue(el) : null
-    );
+    global.categories.map((el) => {
+      if (el.id === filterval) {
+        global.setValue(el);
+        global.getSelectedCategory(el.Name);
+      }
+    });
   };
   useEffect(() => {
-    getProduct("01")
-    console.log("get",getProduct("01"))
-  }, [])
+    getProduct("01");
+    console.log("get", getProduct("01"));
+  }, []);
 
   return (
     <div>
