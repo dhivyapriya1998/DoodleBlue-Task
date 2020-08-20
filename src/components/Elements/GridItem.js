@@ -11,6 +11,9 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
+  Container,
+  Row,
+  Col,
 } from "reactstrap";
 import EditModale from "../Elements/Modal";
 import moduleName from "../Landing.js";
@@ -99,62 +102,67 @@ function GridItem() {
     setItems(newr);
   };
 
-  const size = useContext(ResponsiveContext);
 
   return (
     <div>
-      <Grommet theme={grommet}>
-        <Box style={{ height: "50rem" }}>
-          <Box direction="row" justify="between">
-            <b>{allData.Name}</b>
-            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-              <DropdownToggle caret>Default Sorting</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem disabled>Default</DropdownItem>
-                <DropdownItem onClick={() => sortasc()}>
-                  Low to High
-                </DropdownItem>
-                <DropdownItem onClick={() => sortdesc()}>
-                  High to Low
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </Box>
+      <div style={{ height: "50rem" }}>
+      
+          <Row>
+            <Col md="9">
+              <b>{allData.Name}</b>
+            </Col>
+            <Col style={{marginLeft:"15px"}}>
+              <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle caret>Default Sorting</DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem disabled>Default</DropdownItem>
+                  <DropdownItem onClick={() => sortasc()}>
+                    Low to High
+                  </DropdownItem>
+                  <DropdownItem onClick={() => sortdesc()}>
+                    High to Low
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </Col>
+          </Row>
+ 
 
-          <h6>
-            {/* showing {dataperPage} of {items.length} */}
-          </h6>
-
-          <Grid columns={size !== "15rem" ? "15rem" : "100%"} gap="small">
+        <h6>{/* showing {dataperPage} of {items.length} */}</h6>
+        <Container>
+          <Row>
             {currentData.map((subdata, index) => (
-              <Card
-                key={index}
-                pad="large"
-                onClick={() => {
-                  editModal(subdata.name);
-                }}
-              >
-                <Box align="center">
-                  <img
-                    src="https://sciences.ucf.edu/psychology/wp-content/uploads/sites/63/2019/09/No-Image-Available.png"
-                    width="150"
-                    height="150"
-                  />
-                </Box>
-                <Box gap="small" align="center" pad="small">
-                  {subdata.name}
-                  <Text>${subdata.price}</Text>
-                </Box>
-              </Card>
+              <Col sm="4" className="pt-4">
+                <Card
+                  key={index}
+                  pad="large"
+                  onClick={() => {
+                    editModal(subdata.name);
+                  }}
+                >
+                  <div align="center">
+                    <img
+                      src="https://sciences.ucf.edu/psychology/wp-content/uploads/sites/63/2019/09/No-Image-Available.png"
+                      width="150"
+                      height="150"
+                    />
+                  </div>
+                  <div align="center">
+                    <div className="pb-2">{subdata.name}</div>
+
+                    <div className="pb-3">${subdata.price}</div>
+                  </div>
+                </Card>
+              </Col>
             ))}
-          </Grid>
-        </Box>
-        <Pagination
-          dataperPage={dataperPage}
-          totalData={items.length}
-          paginate={paginate}
-        />
-      </Grommet>
+          </Row>
+        </Container>
+      </div>
+      <Pagination
+        dataperPage={dataperPage}
+        totalData={items.length}
+        paginate={paginate}
+      />
       {editModalval && (
         <Modal isOpen={editModalval}>
           <span style={{ display: "flex", justifyContent: "flex-end" }}>
